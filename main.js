@@ -7,3 +7,7 @@
         document.querySelector("header nav .wrapper").classList.remove("nav-open");
     });
     
+
+    var client = " César ";
+    console.log ("hello"  + client +   "Welcome to Casso");
+    
