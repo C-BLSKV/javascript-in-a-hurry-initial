@@ -1,3 +1,4 @@
+//Menu Section
 
     document.getElementById("open-nav-menu").addEventListener('click', function() {
         document.querySelector("header nav .wrapper").classList.add("nav-open");
@@ -8,6 +9,13 @@
         document.querySelector("header nav .wrapper").classList.remove("nav-open");
     });
     
+//Greating Section
+const GreatingText = "Good Morning";
+const weatherConditions = "Sunny";
+const userLocation = "Concon";
+let temperature = "22";
+let weatherText = `The weather is ${weatherConditions} in ${userLocation} and it\'s ${temperature.toString}°C outside.`
+
 // aplicación de var:
 
     var client = " César ";
