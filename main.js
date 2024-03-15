@@ -14,8 +14,8 @@
 const greetingText = "Good Morning";
 const weatherConditions = "Sunny";
 const userLocation = "Concon";
-let temperature = "22.345";
-let weatherText = `The weather is ${weatherConditions} in ${userLocation} and it's ${temperature.toString} °C outside.`;
+let temperature = "22";
+let weatherText = `The weather is ${weatherConditions} in ${userLocation} and it's ${temperature} °C outside.`;
 
 document.querySelector("#greeting").innerHTML = greetingText;
 
