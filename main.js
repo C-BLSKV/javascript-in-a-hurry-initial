@@ -84,7 +84,7 @@ const galleryImages = [
 ];
 
 for (let i = 0; i <galleryImages.length; i++) {
-    console.log(galleryImages[i]); // Accedemos a cada imagen del array
+    
 }
 
 let mainImage = document.querySelector('#gallery > img');
