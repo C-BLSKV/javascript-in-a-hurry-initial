@@ -79,7 +79,8 @@ const galleryImages = [
       alt : "image 2"
     },
 {src : "./assets/gallery/image3.jpg",
-  alt : "image 3"  }
+  alt : "image 3" 
+     },
 ];
 
 for (let i = 0; i <galleryImages.length; i++) {
@@ -87,5 +88,22 @@ for (let i = 0; i <galleryImages.length; i++) {
 }
 
 let mainImage = document.querySelector('#gallery > img');
+let thumbnails = document.querySelector('#gallery .thumbnails');
+
 mainImage.src = galleryImages [0].src
 mainImage.alt = galleryImages [0].src
+
+//<img src="./assets/gallery/image1.jpg" alt="Thumbnail Image 1"
+//data-array-index="0" 
+//data-selected="true">
+
+galleryImages.forEach (function(image,index){
+
+    let thumb = document.createElement ("img");
+    thumb.src = image.src;
+    thumb.alt = image.alt;
+    thumb.dataset.arrayIndex = index;
+    thumb.dataset.selected = true;
+    thumbnails.appendChild(thumb);
+
+});
