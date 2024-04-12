@@ -91,7 +91,7 @@ let mainImage = document.querySelector('#gallery > img');
 let thumbnails = document.querySelector('#gallery .thumbnails');
 
 mainImage.src = galleryImages [0].src
-mainImage.alt = galleryImages [0].src
+mainImage.alt = galleryImages [0].alt
 
 //<img src="./assets/gallery/image1.jpg" alt="Thumbnail Image 1"
 //data-array-index="0" 
@@ -103,7 +103,24 @@ galleryImages.forEach (function(image,index){
     thumb.src = image.src;
     thumb.alt = image.alt;
     thumb.dataset.arrayIndex = index;
-    thumb.dataset.selected = true;
+    thumb.dataset.selected = index === 0 ? 'true' : 'false';
+
+    thumb.addEventListener('click', function(e) {
+        let selectedIndex = (e.target.dataset.arrayIndex);
+        let selectedImage = galleryImages [selectedIndex]
+
+        mainImage.src =selectedImage.src
+        mainImage.alt = selectedImage.alt
+
+        thumbnails.querySelectorAll("img").forEach(function(img) {
+            img.dataset.selected = false;
+        });
+
+        e.target.dataset.selected = 'true';
+
+    });
+    
+
     thumbnails.appendChild(thumb);
 
 });
