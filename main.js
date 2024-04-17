@@ -1,14 +1,33 @@
 //Menu Section
 
 document.getElementById("open-nav-menu").addEventListener('click', function() {
-    document.querySelector("header nav.wrapper").classList.add("nav-open");
+    document.querySelector("header div.wrapper").classList.add("nav-open");
     let client = " César "
 });
 
 document.getElementById("close-nav-menu").addEventListener('click', function() {
-    document.querySelector("header nav.wrapper").classList.remove("nav-open");
+    document.querySelector("header div.wrapper").classList.remove("nav-open");
 });
 
+//Greating Section
+
+let currentHour = new Date().getHours();
+let greetingText
+
+if (currentHour < 12 ) {
+    greetingText = "Good Morning!";
+}  else if (currentHour < 19 ) {
+    greetingText = "Good Afternoon!";
+} else if (currentHour < 24) {
+    greetingText = "Good Evening!";
+} else {
+    greetingText = "Welcome!";
+}
+
+
+const weatherConditions = "Sunny";
+const userLocation = "Concon";
+let temperature = 20;
 
 //Greating Section
 
@@ -16,11 +35,6 @@ function celsiusToFahr(temperature) {
     let fahr = (temperature * 9/5) + 32;
     return fahr;
 }
-
-const greetingText = "Good Morning";
-const weatherConditions = "Sunny";
-const userLocation = "Concon";
-let temperature = 20;
 
 // Función para actualizar el texto del clima
 function updateWeatherText() {
@@ -57,6 +71,8 @@ document.querySelectorAll('input[name="temperature"]').forEach((radio) => {
     // Actualiza el texto del clima cuando se hace clic en los botones
     updateWeatherText();
 
+//Local Time Section
+
 setInterval (function(){
 let localTime = new Date();
 
@@ -66,6 +82,7 @@ document.querySelector("span[data-time=minutes]").textContent = localTime.getMin
 
 document.querySelector("span[data-time=seconds]").textContent = localTime.getSeconds().toString().padStart (2,"0");
 }, 1000);
+
 
 //Gallery Images
 
