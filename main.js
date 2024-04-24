@@ -18,17 +18,17 @@ const  products = [
       image: "./assets/products/img6.png"
     },
     {
-      title: "Space Odissey",
-      author: "Marie Anne",
-      price: 35,
-      image: "./assets/products/img1.png"
-    },
-    {
-      title: "Doomed City",
-      author: "Jason Cobert",
-      price: 0,
-      image: "./assets/products/img2.png"
-    },
+        title: "Space Odissey",
+        author: "Marie Anne",
+        price: 35,
+        image: "./assets/products/img1.png"
+      },
+      {
+        title: "Doomed City",
+        author: "Jason Cobert",
+        price: 0,
+        image: "./assets/products/img2.png"
+      },
     {
       title: "Black Dog",
       author: "John Doe",
@@ -196,6 +196,14 @@ function productHandler () {
 
             let productsSection = document.querySelector(".products-area");
 
+            let freeProducts = products.filter(function(item) {
+                return !item.price || item.price <= 0;
+            })
+
+            let paidProducts = products.filter(function(item) {
+                return item.price > 0;
+            })
+
             //Run a loop through the product  and create an HTML element ("product-item") for each of them
             products.forEach (function (product, index) {
 
@@ -243,6 +251,11 @@ function productHandler () {
                     productsSection.append(productElm);
 
              });    
+
+            document.querySelector (".products-filter label[for=all] span.product-amount").textContent = products.length;
+            document.querySelector (".products-filter label[for=paid] span.product-amount").textContent = paidProducts.length;
+            document.querySelector (".products-filter label[for=free] span.product-amount").textContent = freeProducts.length;
+
  }
 
 //Page Load
