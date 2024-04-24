@@ -180,21 +180,62 @@ function galleryHandler () {
 }
 
 //Products Section
-//estructura base HTML para products: 
 
-        /*<div class="product-item">
-        <img src="./assets/products/img6.png" alt="AstroFiction">
-            <div class="product-details">
-            <h3 class="product-title">AstroFiction</h3>
-            <p class="product-author">John Doe</p>
-            <p class="price-title">Price</p>
-            <p class="product-price">$ 49.90</p>
-            </div>
-        </div> */
+function populateProducts (productsList) {
+
+                let productsSection = document.querySelector(".products-area");
+                productsSection.textContent ="";
+
+                //Run a loop through the product  and create an HTML element ("product-item") for each of them
+                productsList.forEach (function (product, index) {
+
+                    // Create the HTML element for  the individual product
+                    let productElm = document.createElement("div");
+                    productElm.classList.add("product-item");
+    
+                    // Create the product image
+                    let productImage = document.createElement("img");
+                    productImage.src = product.image;
+                    productImage.alt =  "image for " + product.title;
+    
+                    //Create the product details section
+                    let productDetails = document.createElement ("div");
+                    productDetails.classList.add("product-details");
+    
+                    //Create product Title, Author, Price Title and Price
+                    let productTitle = document.createElement("h3");
+                    productTitle.classList.add("product-title");
+                    productTitle.textContent = product.title;
+    
+                    let productAuthor= document.createElement("p");
+                    productAuthor.classList.add("product-author");
+                    productAuthor.textContent = product.author;
+    
+                    let  priceTitle= document.createElement("p");
+                    priceTitle.classList.add("price-title");
+                    priceTitle.textContent = "Price";                    
+    
+                    let  productPrice= document.createElement("p");
+                    productPrice.classList.add("product-price");
+                    productPrice.textContent = product.price > 0 ? "$" + product.price.toFixed (2) : "Free"; 
+    
+                    //Append the product details
+                    productDetails.append(productTitle);
+                    productDetails.append(productAuthor);
+                    productDetails.append(priceTitle);
+                    productDetails.append(productPrice);
+    
+                    // Add all child HTML elements of the product
+                    productElm.append(productImage);
+                    productElm.append(productDetails);
+    
+                    // Add the complete invidual product to th productSection
+                    productsSection.append(productElm);
+    
+             });    
+}
 
 function productHandler () {
-
-            let productsSection = document.querySelector(".products-area");
 
             let freeProducts = products.filter(function(item) {
                 return !item.price || item.price <= 0;
@@ -204,57 +245,24 @@ function productHandler () {
                 return item.price > 0;
             })
 
-            //Run a loop through the product  and create an HTML element ("product-item") for each of them
-            products.forEach (function (product, index) {
-
-                    // Create the HTML element for  the individual product
-                    let productElm = document.createElement("div");
-                    productElm.classList.add("product-item");
-
-                    // Create the product image
-                    let productImage = document.createElement("img");
-                    productImage.src = product.image;
-                    productImage.alt =  "image for " + product.title;
-
-                    //Create the product details section
-                    let productDetails = document.createElement ("div");
-                    productDetails.classList.add("product-details");
-
-                    //Create product Title, Author, Price Title and Price
-                    let productTitle = document.createElement("h3");
-                    productTitle.classList.add("product-title");
-                    productTitle.textContent = product.title;
-
-                    let productAuthor= document.createElement("p");
-                    productAuthor.classList.add("product-author");
-                    productAuthor.textContent = product.author;
-
-                    let  priceTitle= document.createElement("p");
-                    priceTitle.classList.add("price-title");
-                    priceTitle.textContent = "Price";                    
-
-                    let  productPrice= document.createElement("p");
-                    productPrice.classList.add("product-price");
-                    productPrice.textContent = product.price > 0 ? "$" + product.price.toFixed (2) : "Free"; 
-
-                    //Append the product details
-                    productDetails.append(productTitle);
-                    productDetails.append(productAuthor);
-                    productDetails.append(priceTitle);
-                    productDetails.append(productPrice);
-
-                    // Add all child HTML elements of the product
-                    productElm.append(productImage);
-                    productElm.append(productDetails);
-
-                    // Add the complete invidual product to th productSection
-                    productsSection.append(productElm);
-
-             });    
+            populateProducts(products);
 
             document.querySelector (".products-filter label[for=all] span.product-amount").textContent = products.length;
             document.querySelector (".products-filter label[for=paid] span.product-amount").textContent = paidProducts.length;
             document.querySelector (".products-filter label[for=free] span.product-amount").textContent = freeProducts.length;
+
+            let productsFilter = document.querySelector(".products-filter");
+            productsFilter.addEventListener("click", function(e){
+
+                if (e.target.id === "all"){
+                    populateProducts(products);
+                } else if (e.target.id === "paid"){
+                    populateProducts(paidProducts);
+                } else if (e.target.id === "free"){
+                    populateProducts(freeProducts);
+                };
+
+            })
 
  }
 
