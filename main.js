@@ -266,9 +266,15 @@ function productHandler () {
 
  }
 
+ function footerHandler(){
+    let currentYear = new Date().getFullYear();
+    document.querySelector ("footer").textContent = `© ${currentYear} - All Rights Reserved.`;
+ }
+
 //Page Load
     menuHandler ();
     greetingHandler ();
     clockHandler ();
     galleryHandler ();
     productHandler ();
+    footerHandler ();
