@@ -120,6 +120,10 @@ function  greetingHandler () {
        // upgrate bottom text weather section
        updateWeatherText();
 }
+//User Location
+navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position);
+});
 
 //Local Time Section
 function clockHandler () {
@@ -180,7 +184,6 @@ function galleryHandler () {
 }
 
 //Products Section
-
 function populateProducts (productsList) {
 
                 let productsSection = document.querySelector(".products-area");
