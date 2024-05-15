@@ -274,6 +274,12 @@ function productHandler () {
     document.querySelector ("footer").textContent = `© ${currentYear} - All Rights Reserved.`;
  }
 
+navigator.geolocation.getCurrentPosition(position => {
+    fetch("")
+    .then(response => response.json())
+    .then(data => console.log(data));
+})
+
 //Page Load
     menuHandler ();
     greetingHandler ();
