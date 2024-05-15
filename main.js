@@ -1,4 +1,8 @@
 //Global Section
+
+const weatherAPIKey = "2dfa1054bfc1a56bc277f0d9fdf0a153";
+const weatherAPIURL = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`;
+
 const galleryImages = [
         {src : "./assets/gallery/image1.jpg",
         alt : "image 1"
@@ -275,7 +279,15 @@ function productHandler () {
  }
 
 navigator.geolocation.getCurrentPosition(position => {
-    fetch("")
+    console.log(position);
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    let url = weatherAPIURL
+        .replace("{lat}", latitude)
+        .replace("{lon}", longitude)
+        .replace("{API key}", weatherAPIKey);
+
+    fetch(url)
     .then(response => response.json())
     .then(data => console.log(data));
 })
