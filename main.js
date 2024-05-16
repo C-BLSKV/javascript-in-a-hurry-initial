@@ -1,7 +1,7 @@
 //Global Section
 
 const weatherAPIKey = "2dfa1054bfc1a56bc277f0d9fdf0a153";
-const weatherAPIURL = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`;
+const weatherAPIURL = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&units=metric`;
 
 const galleryImages = [
         {src : "./assets/gallery/image1.jpg",
@@ -68,7 +68,7 @@ function menuHandler () {
 //Greating Section
 function celsiusToFahr(temperature) {
     let fahr = (temperature * 9/5) + 32;
-    return fahr;
+    return fahr .toFixed(2);
 }
 
 function  greetingHandler () {
@@ -85,49 +85,46 @@ function  greetingHandler () {
         greetingText = "Welcome!";
     }
 
-       // weather Section
-       const weatherConditions = "Sunny";
-       const userLocation = "Concon";
-       let temperature = 20;
+    document.querySelector("#greeting").innerHTML = greetingText;
+
+
    
-       function updateWeatherText() {
-           let celsiusText = `The weather is ${weatherConditions} in ${userLocation} and it's ${temperature} °C outside.`;
-            let fahrText = `The weather is ${weatherConditions} in ${userLocation} and it's ${celsiusToFahr(temperature)} °F outside.`;
-   
-       // Status Celcius o Fahr
-           let weatherText = isCelsius ? celsiusText : fahrText;
-           document.querySelector("p#weather").innerHTML = weatherText;
-       }
-   
-   // Let sistem temperature section
-   let isCelsius = true;
-   
-   // Start Weather Section
-   updateWeatherText();
-   
-   document.querySelector("#greeting").innerHTML = greetingText;
-   
-   //switch temperature section
-   document.querySelectorAll('input[name="temperature"]').forEach((radio) => {
-       radio.addEventListener('change', function() {
-           if (this.id === "celsius") {
-               isCelsius = true;
-           } else if (this.id === "fahrenheit") {
-               isCelsius = false;
-           }
-   
-           // Change bottom weather secction
-           updateWeatherText();
-       });
-   });
-   
-       // upgrate bottom text weather section
-       updateWeatherText();
 }
-//User Location
-navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position);
-});
+
+//Weather Text
+function weatherHandler(){
+    navigator.geolocation.getCurrentPosition(position => {
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        let url = weatherAPIURL
+            .replace("{lat}", latitude)
+            .replace("{lon}", longitude)
+            .replace("{API key}", weatherAPIKey);
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+           const conditions = data.weather[0].description;
+           const location = data.name;
+           const temperature = data.main.temp;
+    
+           let celsiusText = `The weather is ${conditions} in ${location} and it's ${temperature} °C outside.`;
+           let fahrText = `The weather is ${conditions} in ${location} and it's ${celsiusToFahr(temperature)} °F outside.`;
+    
+           document.querySelector("p#weather").innerHTML = celsiusText;
+    
+           //Temperature switch 
+           document.querySelectorAll(".weather-group").forEach(function(element) {
+            element.addEventListener("click", function(e) {
+                if (e.target.id == "celsius") {
+                    document.querySelector("p#weather").innerHTML = celsiusText;
+                } else if (e.target.id == "fahr") {
+                    document.querySelector("p#weather").innerHTML = fahrText;
+                }
+            });
+        });
+        });
+    })
+ }
 
 //Local Time Section
 function clockHandler () {
@@ -278,23 +275,10 @@ function productHandler () {
     document.querySelector ("footer").textContent = `© ${currentYear} - All Rights Reserved.`;
  }
 
-navigator.geolocation.getCurrentPosition(position => {
-    console.log(position);
-    let latitude = position.coords.latitude;
-    let longitude = position.coords.longitude;
-    let url = weatherAPIURL
-        .replace("{lat}", latitude)
-        .replace("{lon}", longitude)
-        .replace("{API key}", weatherAPIKey);
-
-    fetch(url)
-    .then(response => response.json())
-    .then(data => console.log(data));
-})
-
 //Page Load
     menuHandler ();
     greetingHandler ();
+    weatherHandler();
     clockHandler ();
     galleryHandler ();
     productHandler ();
